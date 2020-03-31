@@ -14,14 +14,14 @@ const Employee = function(employee) {
     this.privilege = employee.privilege
 };
 
-Employee.create = (newEmployee, res) => {
-    sql.query("INSERT INTO employees SET ?", newEmployee, (err, res) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(res.insertId);
-        }
-    });
-};
+// Employee.create = (newEmployee, res) => {
+//     sql.query("INSERT INTO employees SET ?", newEmployee, (err, res) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             console.log(res.insertId);
+//         }
+//     });
+// };
 
 module.exports = Employee;

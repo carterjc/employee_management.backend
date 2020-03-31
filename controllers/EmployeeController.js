@@ -13,6 +13,7 @@ module.exports = {
         });
     },
     createEmployee: async function (req, res) {
+        
         if (!req.body) {
             res.status(400).send({ message: "Content cannot be empty" });
         };
@@ -30,12 +31,14 @@ module.exports = {
             privilege: req.body.privilege
         });
 
-        Employee.create(employee, (err, data) => {
+        db.query("INSERT INTO employees SET ?", employee, (err, resp) => {
             if (err) {
+                console.log(err);
                 res.status(500).send({ error: err });
-            }
-            else {
-                res.send(data)
+            } else {
+                console.log(resp.insertId);
+                res.send(employee);
+
             }
         });
     }
