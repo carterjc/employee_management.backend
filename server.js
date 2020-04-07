@@ -18,6 +18,9 @@ app.get("/api/v1/", (req, res) => {
 const employeeRouter = require('./routes/EmployeeRoute');
 app.use('/api/v1/employees', employeeRouter);
 
+const saleRouter = require('./routes/SaleRoute');
+app.use('/api/v1/sales', saleRouter);
+
 app.listen(PORT, () => {
     console.log("Server is running on port " + PORT)
 })

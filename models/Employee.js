@@ -6,22 +6,12 @@ const Employee = function(employee) {
     this.last_name = employee.last_name,
     this.email = employee.email,
     this.password = employee.password,
-    this.department = employee.department,
-    this.location = employee.location,
+    this.dep_id = employee.department,
+    this.location_id = employee.location,
     this.full_time = employee.full_time,
     this.date_joined = employee.date_joined,
-    this.position = employee.position,
+    this.position_id = employee.position,
     this.privilege = employee.privilege
 };
-
-// Employee.create = (newEmployee, res) => {
-//     sql.query("INSERT INTO employees SET ?", newEmployee, (err, res) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log(res.insertId);
-//         }
-//     });
-// };
 
 module.exports = Employee;
