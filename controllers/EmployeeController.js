@@ -4,8 +4,17 @@ const db = require('../models/db');
 
 module.exports = {
     getEmployees: async function (req, res) {
-        var sql = "SELECT * FROM employees"
+        var sql = "SELECT emp_id, first_name, last_name, email, `password`, full_time, date_joined, privilege, d.`name`, d.`description`, l.`name`, address, city, state, country, title, p.`description` FROM employees e JOIN departments d ON e.dep_id = d.dep_id JOIN locations l ON e.location_id = l.location_id JOIN positions p ON e.position_id = p.position_id"
         db.query(sql, function(err, rows, fields) {
+            if (err) {
+                res.status.send({ error: err });
+            };
+            res.json(rows);
+        });
+    },
+    getEmployee: async function (req, res) {
+        var sql = "SELECT emp_id, first_name, last_name, email, `password`, full_time, date_joined, privilege, d.`name`, d.`description`, l.`name`, address, city, state, country, title, p.`description` FROM employees e JOIN departments d ON e.dep_id = d.dep_id JOIN locations l ON e.location_id = l.location_id JOIN positions p ON e.position_id = p.position_id WHERE emp_id = ?"
+        db.query(sql, req.params.id, function(err, rows, fields) {
             if (err) {
                 res.status.send({ error: err });
             };

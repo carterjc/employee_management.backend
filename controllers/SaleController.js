@@ -22,7 +22,7 @@ module.exports = {
             amount: req.body.amount,
             installments: req.body.installments,
             init_date: req.body.init_date || new Date(),
-            date_due: req.body.date_due || (new Date()).setDate((new Date()).getDate() + 1),
+            date_due: req.body.date_due,
             emp_id: req.body.emp_id,
             customer_id: req.body.customer_id
         });
@@ -48,7 +48,7 @@ module.exports = {
             amount: req.body.amount,
             installments: req.body.installments,
             init_date: req.body.init_date || new Date(),
-            date_due: req.body.date_due || (new Date()).setDate((new Date()).getDate() + 1),
+            date_due: req.body.date_due,
             emp_id: req.body.emp_id,
             customer_id: req.body.customer_id
         });

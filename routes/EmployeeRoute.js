@@ -6,6 +6,10 @@ router.get("/", (req, res) => {
     EmployeeController.getEmployees(req, res);
 })
 
+router.get("/:id", (req, res) => {
+    EmployeeController.getEmployee(req, res);
+})
+
 router.post("/", (req, res) => {
     EmployeeController.createEmployee(req, res);
 })
