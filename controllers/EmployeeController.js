@@ -86,7 +86,7 @@ module.exports = {
         )
     },
     deleteEmployee: async function (req, res) {
-        db.query("DELETE FROM customers WHERE emp_id = ?", parseInt(req.params.id), (err, resp) => {
+        db.query("DELETE FROM employees WHERE emp_id = ?", parseInt(req.params.id), (err, resp) => {
             if (err) {
                 console.log(err);
                 res.status(500).send({ error: err });

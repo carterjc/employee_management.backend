@@ -12,6 +12,15 @@ module.exports = {
             res.json(rows);
         });
     },
+    getSale: async function (req, res) {
+        var sql = "SELECT * FROM sales WHERE sale_id = ?"
+        db.query(sql, req.params.id, function(err, rows, fields) {
+            if (err) {
+                res.status.send({ error: err });
+            };
+            res.json(rows);
+        });
+    },
     createSale: async function (req, res) {
         
         if (!req.body) {

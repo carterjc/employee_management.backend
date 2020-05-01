@@ -6,6 +6,10 @@ router.get("/", (req, res) => {
     SaleController.getSales(req, res);
 })
 
+router.get("/:id", (req, res) => {
+    SaleController.getSale(req, res);
+})
+
 router.post("/", (req, res) => {
     SaleController.createSale(req, res);
 })
