@@ -4,7 +4,7 @@ const db = require('../models/db');
 
 module.exports = {
     getEmployees: async function (req, res) {
-        var sql = "SELECT emp_id, first_name, last_name, email, `password`, full_time, date_joined, privilege, d.`name`, d.`description`, l.`name`, address, city, state, country, title, p.`description` FROM employees e JOIN departments d ON e.dep_id = d.dep_id JOIN locations l ON e.location_id = l.location_id JOIN positions p ON e.position_id = p.position_id"
+        var sql = "SELECT * FROM employees"
         db.query(sql, function(err, rows, fields) {
             if (err) {
                 res.status.send({ error: err });
@@ -13,7 +13,7 @@ module.exports = {
         });
     },
     getEmployee: async function (req, res) {
-        var sql = "SELECT emp_id, first_name, last_name, email, `password`, full_time, date_joined, privilege, d.`name`, d.`description`, l.`name`, address, city, state, country, title, p.`description` FROM employees e JOIN departments d ON e.dep_id = d.dep_id JOIN locations l ON e.location_id = l.location_id JOIN positions p ON e.position_id = p.position_id WHERE emp_id = ?"
+        var sql = "SELECT emp_id, emp_fn, emp_ln, email, `password`, full_time, date_joined, privilege, d.`dep_name`, d.`dep_description`, l.`loc_name`, address, city, state, country, pos_title, p.`pos_description` FROM employees e JOIN departments d ON e.dep_id = d.dep_id JOIN locations l ON e.location_id = l.location_id JOIN positions p ON e.position_id = p.position_id WHERE emp_id = ?"
         db.query(sql, req.params.id, function(err, rows, fields) {
             if (err) {
                 res.status.send({ error: err });
@@ -28,15 +28,15 @@ module.exports = {
         };
 
         const employee = new Employee({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
+            emp_fn: req.body.emp_fn,
+            emp_ln: req.body.emp_ln,
             email: req.body.email,
             password: req.body.password,
-            department: req.body.department,
-            location: req.body.location,
+            dep_id: req.body.dep_id,
+            location_id: req.body.location_id,
             full_time: req.body.full_time,
-            date_joined: req.body.date_joined || new Date(),
-            position: req.body.position,
+            date_joined: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            position_id: req.body.position_id,
             privilege: req.body.privilege
         });
 
@@ -58,22 +58,22 @@ module.exports = {
         };
 
         const employee = new Employee({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
+            emp_fn: req.body.emp_fn,
+            emp_ln: req.body.emp_ln,
             email: req.body.email,
             password: req.body.password,
-            department: req.body.department,
-            location: req.body.location,
+            dep_id: req.body.dep_id,
+            location_id: req.body.location_id,
             full_time: req.body.full_time,
-            position: req.body.position,
+            position_id: req.body.position_id,
             privilege: req.body.privilege
         });
 
         console.log(employee, req.body)
 
         db.query(
-            "UPDATE employees SET first_name = ?, last_name = ?, email = ?, password = ?, full_time = ?, privilege = ?, dep_id = ?, location_id = ?, position_id = ? WHERE emp_id = ?",
-            [employee.first_name, employee.last_name, employee.email, employee.password, employee.full_time, employee.privilege, employee.dep_id, employee.location_id, employee.position_id, req.params.id],
+            "UPDATE employees SET emp_fn = ?, emp_ln = ?, email = ?, password = ?, full_time = ?, privilege = ?, dep_id = ?, location_id = ?, position_id = ? WHERE emp_id = ?",
+            [employee.emp_fn, employee.emp_ln, employee.email, employee.password, employee.full_time, employee.privilege, employee.dep_id, employee.location_id, employee.position_id, req.params.id],
             (err, resp) => {
                 if (err) {
                     console.log(err);
@@ -92,7 +92,7 @@ module.exports = {
                 res.status(500).send({ error: err });
             } else {
                 console.log(resp.insertId);
-                res.send({message: "Employee deleted"});
+                res.send({ message: "Employee deleted" });
             }
         });
     }

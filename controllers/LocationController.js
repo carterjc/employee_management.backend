@@ -1,10 +1,10 @@
-const Employee = require('../models/Employee');
+const Location = require('../models/Location');
 const db = require('../models/db');
 
 
 module.exports = {
-    getCustomers: async function (req, res) {
-        var sql = "SELECT * FROM customers"
+    getLocations: async function (req, res) {
+        var sql = "SELECT * FROM locations"
         db.query(sql, function(err, rows, fields) {
             if (err) {
                 res.status.send({ error: err });
@@ -12,8 +12,8 @@ module.exports = {
             res.json(rows);
         });
     },
-    getCustomer: async function (req, res) {
-        var sql = "SELECT * FROM customers WHERE customer_id = ?"
+    getLocation: async function (req, res) {
+        var sql = "SELECT * FROM locations WHERE location_id = ?"
         db.query(sql, req.params.id, function(err, rows, fields) {
             if (err) {
                 res.status.send({ error: err });
@@ -21,75 +21,71 @@ module.exports = {
             res.json(rows);
         });
     },
-    createCustomer: async function (req, res) {
+    createLocation: async function (req, res) {
         
         if (!req.body) {
             res.status(400).send({ message: "Content cannot be empty" });
         };
 
-        const customer = new Customer({
-            customer_id: req.body.customer_id,
-            customer_fn: req.body.customer_fn,
-            customer_ln: req.body.customer_ln,
+        const location = new Location({
+            location_id: req.body.location_id,
+            loc_name: req.body.loc_name,
             address: req.body.address,
             city: req.body.city,
             state: req.body.state,
-            country: req.body.country,
-            company_name: req.body.company_name
+            country: req.body.country
         });
 
-        db.query("INSERT INTO employees SET ?", employee, (err, resp) => {
+        db.query("INSERT INTO locations SET ?", location, (err, resp) => {
             if (err) {
                 console.log(err);
                 res.status(500).send({ error: err });
             } else {
                 console.log(resp.insertId);
-                res.send(customer);
+                res.send(location);
 
             }
         });
     },
-    updateCustomer: async function (req, res) {
+    updateLocation: async function (req, res) {
 
         if (!req.body) {
             res.status(400).send({ message: "Content cannot be empty" });
         };
 
-        const customer = new Customer({
-            customer_id: req.body.customer_id,
-            customer_fn: req.body.customer_fn,
-            customer_ln: req.body.customer_ln,
+        const location = new Location({
+            location_id: req.body.location_id,
+            loc_name: req.body.loc_name,
             address: req.body.address,
             city: req.body.city,
             state: req.body.state,
-            country: req.body.country,
-            company_name: req.body.company_name
+            country: req.body.country
         });
 
-        console.log(customer, req.body)
+        console.log(location, req.body)
 
         db.query(
-            "UPDATE customers SET customer_fn = ?, customer_ln = ?, address = ?, city = ?, state = ?, country = ?, company_name = ? WHERE customer_id = ?",
-            [customer.customer_fn, customer.customer_ln, customer.address, customer.city, customer.state, customer.country, customer.company_name, req.params.id],
+            "UPDATE locations SET loc_name = ?, address = ?, city = ?, state = ?, country = ? WHERE location_id = ?",
+            [location.loc_name, location.address, location.city, location.state, location.country, req.params.id],
             (err, resp) => {
                 if (err) {
                     console.log(err);
                     res.status(500).send({ error: err });
                 } else {
                     console.log(resp.insertId);
-                    res.send(customer);    
+                    res.send(location);    
                 }
             }
         )
     },
-    deleteCustomer: async function (req, res) {
-        db.query("DELETE FROM customers WHERE customer_id = ?", parseInt(req.params.id), (err, resp) => {
+    deleteLocation: async function (req, res) {
+        db.query("DELETE FROM locations WHERE location_id = ?", parseInt(req.params.id), (err, resp) => {
             if (err) {
                 console.log(err);
                 res.status(500).send({ error: err });
             } else {
                 console.log(resp.insertId);
-                res.send({message: "Customer deleted"});
+                res.send({message: "Location deleted"});
             }
         });
     }

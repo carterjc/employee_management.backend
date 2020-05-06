@@ -24,6 +24,15 @@ app.use('/api/v1/sales', saleRouter);
 const customerRouter = require('./routes/CustomerRoute');
 app.use('/api/v1/customers', customerRouter);
 
+const departmentRouter = require('./routes/DepartmentRoute');
+app.use('/api/v1/departments', departmentRouter);
+
+const locationRouter = require('./routes/LocationRoute');
+app.use('/api/v1/locations', locationRouter);
+
+const positionRouter = require('./routes/PositionRoute');
+app.use('/api/v1/positions', positionRouter);
+
 app.listen(PORT, () => {
     console.log("Server is running on port " + PORT)
 })

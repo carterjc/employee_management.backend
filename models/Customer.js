@@ -2,8 +2,8 @@ const sql = require('../models/db');
 
 const Customer = function(customer) {
     this.customer_id = customer.customer_id,
-    this.first_name = customer.first_name,
-    this.last_name = customer.last_name,
+    this.customer_fn = customer.customer_fn,
+    this.customer_ln = customer.customer_ln,
     this.address = customer.address,
     this.city = customer.city,
     this.state = customer.state,

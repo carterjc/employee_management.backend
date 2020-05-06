@@ -13,7 +13,7 @@ module.exports = {
         });
     },
     getSale: async function (req, res) {
-        var sql = "SELECT * FROM sales WHERE sale_id = ?"
+        var sql = "SELECT sale_id, amount, installments, init_date, date_due, emp_fn, emp_ln, email, `password`, full_time, date_joined, privilege, customer_fn, customer_ln, c.address, c.city, c.state, c.country, c.company_name FROM sales s JOIN employees e ON e.emp_id = s.emp_id JOIN customers c ON c.customer_id = s.customer_id WHERE sale_id = ?"
         db.query(sql, req.params.id, function(err, rows, fields) {
             if (err) {
                 res.status.send({ error: err });
@@ -30,7 +30,7 @@ module.exports = {
         const sale = new Sale({
             amount: req.body.amount,
             installments: req.body.installments,
-            init_date: req.body.init_date || new Date(),
+            init_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
             date_due: req.body.date_due,
             emp_id: req.body.emp_id,
             customer_id: req.body.customer_id
@@ -56,8 +56,8 @@ module.exports = {
         const sale = new Sale({
             amount: req.body.amount,
             installments: req.body.installments,
-            init_date: req.body.init_date || new Date(),
-            date_due: req.body.date_due,
+            init_date: req.body.init_date.slice(0, 19).replace('T', ' '),
+            date_due: req.body.date_due.slice(0, 19).replace('T', ' '),
             emp_id: req.body.emp_id,
             customer_id: req.body.customer_id
         });
